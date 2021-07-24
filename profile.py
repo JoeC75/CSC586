@@ -18,9 +18,9 @@ link = request.LAN("lan")
 
 for i in range(2):
   if i == 0:
-    node = request.XenVM("ldapserver")    
+    node = request.XenVM("Webserver")    
   else:
-    node = request.XenVM("ldapclient")
+    node = request.XenVM("Observer")
    
   node.routable_control_ip = "true"  
   node.disk_image = "urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD"
@@ -31,5 +31,4 @@ for i in range(2):
   
 # Print the RSpec to the enclosing page.
 pc.printRequestRSpec(request)
-
 
