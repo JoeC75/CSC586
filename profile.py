@@ -7,7 +7,7 @@ request = pc.makeRequestRSpec()
 
 tourDescription = \
 """
-This profile provides a two-node set to study SSO. One node will be the LDAP server, and the other node is a client who is to be authenticated using LDAP. 
+This profile provides a two-node set to study NFS and Login attempts. This is for Assignment 2 of CSC586.
 """
 
 tour = IG.Tour()
@@ -21,13 +21,18 @@ for i in range(2):
     node = request.XenVM("Webserver")    
   else:
     node = request.XenVM("Observer")
-   
-  node.routable_control_ip = "true"  
+  
+  if i == 0: 
+    node.routable_control_ip = "true"  
+  else:
+    node.routable_control_ip = "false"
+    
   node.disk_image = "urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD"
   iface = node.addInterface("if" + str(i))
   iface.component_id = "eth1"
   iface.addAddress(pg.IPv4Address(prefixForIP + str(i + 1), "255.255.255.0"))
   link.addInterface(iface)
+  
   if i == 0:
     node.addService(pg.Execute(shell="sh", command="bash /local/repository/silly.sh"))
   else:
